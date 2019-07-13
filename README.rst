@@ -6,6 +6,10 @@ Paragraph title. Generates navigation for a markdown file. Just add comments :co
 
 Installation:
 
-```bash
-pip install genmdnav
-```
+.. code-block:: bash
+  $ pip install genmdnav
+  
+Usage:
+  
+.. code-block:: bash
+  $ genmdnav /path/to/file.md
