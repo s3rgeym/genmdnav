@@ -1,8 +1,9 @@
 import re
 from argparse import ArgumentParser
 from pathlib import Path
+from urllib.parse import quote
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 
 def main():
@@ -10,7 +11,7 @@ def main():
       description='Generates navigation for a markdown file. Just add comments <!-- nav --><!-- /nav --> to the desired position.')
   arg_parser.add_argument('files', help='list markdown files', nargs='+')
   arg_parser.add_argument(
-      '--title', default='Table of content', help='navigation title')
+      '--title', default='Table of Contents', help='navigation title')
   args = arg_parser.parse_args()
 
   for file in args.files:
@@ -25,7 +26,7 @@ def main():
       # Теперь ищем заголовки
       headers = re.findall('^#.*', cleaned, re.M)
 
-      nav = ['', f'# {args.title}', '']
+      nav = ['', '# {}'.format(args.title), '']
       for header in headers:
         name = header.lstrip('#')
         depth = len(header) - len(name)
@@ -36,9 +37,10 @@ def main():
         # Вырезаем все не буквенно-цифровые символы
         # «-» то же не нужно вырезать
         uri = re.sub(r'[^\w\s-]', '', uri)
+        uri = quote(uri)
         # Заменяем пробелы на «-»
         uri = uri.replace(' ', '-')
-        nav.append('   ' * (depth - 1) + f'1. [{name}](#{uri})')
+        nav.append('{}1. [{}](#{})'.format('   ' * (depth - 1), name, uri))
 
       nav.append('')
       content = re.sub(r'(?<=\<!-- (nav) --\>).*?(?=\<!-- /\1 --\>)',

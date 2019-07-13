@@ -12,8 +12,7 @@ Installation:
 
 
 Usage:
-  
+
 .. code-block:: bash
 
   $ genmdnav /path/to/file.md
-
