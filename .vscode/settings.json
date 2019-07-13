@@ -1,0 +1,7 @@
+{
+  "python.formatting.autopep8Args": [
+    "--indent-size=2"
+  ],
+  "python.pythonPath": "~/.cache/pypoetry/virtualenvs/genmdnav-py3.7/bin/python",
+  "restructuredtext.confPath": ""
+}
