@@ -3,13 +3,13 @@ from argparse import ArgumentParser
 from pathlib import Path
 from urllib.parse import quote
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 
 
 def main():
   arg_parser = ArgumentParser(
       description='Generates navigation for a markdown file. Just add comments <!-- nav --><!-- /nav --> to the desired position.')
-  arg_parser.add_argument('files', help='list markdown files', nargs='+')
+  arg_parser.add_argument('files', help='list of markdown files', nargs='+')
   arg_parser.add_argument(
       '--title', default='Table of Contents', help='navigation title')
   args = arg_parser.parse_args()
@@ -37,9 +37,9 @@ def main():
         # Вырезаем все не буквенно-цифровые символы
         # «-» то же не нужно вырезать
         uri = re.sub(r'[^\w\s-]', '', uri)
-        uri = quote(uri)
         # Заменяем пробелы на «-»
         uri = uri.replace(' ', '-')
+        uri = quote(uri)
         nav.append('{}1. [{}](#{})'.format('   ' * (depth - 1), name, uri))
 
       nav.append('')
